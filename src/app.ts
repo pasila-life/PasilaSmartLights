@@ -40,37 +40,7 @@ async function app() {
     }
   }
 
-  client.onText(/\/turnon/, msg => {
-    if (msg.from && msg.from.username === 'jaloviina') {
-      const lightbulb = Array.from(devices.values()).filter(d => d.type === AccessoryTypes.lightbulb)
-      if (lightbulb) {
-        lightbulb.forEach((device) => {
-          if (device.lightList && device.lightList.length > 0) {
-            device.lightList.forEach(async l => {
-              await l.turnOn()
-              await l.setBrightness(1000)
-            })
-          }
-        })
-      }
-    }
-  })
-
-  client.onText(/\/turnoff/, msg => {
-    if (msg.from && msg.from.username === 'jaloviina') {
-      const lightbulb = Array.from(devices.values()).filter(d => d.type === AccessoryTypes.lightbulb)
-      if (lightbulb) {
-        lightbulb.forEach((device) => {
-          if (!device) return
-          if (device.lightList.length > 0) {
-            device.lightList.forEach(l => l.turnOff())
-          }
-        })
-      }
-    }
-  })
-
-  ws.on('message', data => {
+  const turnOnLights = () => {
     const lightbulb = Array.from(devices.values()).filter(d => d.type === AccessoryTypes.lightbulb)
     if (lightbulb) {
       lightbulb.forEach((device) => {
@@ -81,6 +51,37 @@ async function app() {
           })
         }
       })
+    }
+  }
+
+  const turnOffLights = () => {
+    const lightbulb = Array.from(devices.values()).filter(d => d.type === AccessoryTypes.lightbulb)
+    if (lightbulb) {
+      lightbulb.forEach((device) => {
+        if (!device) return
+        if (device.lightList.length > 0) {
+          device.lightList.forEach(l => l.turnOff())
+        }
+      })
+    }
+  }
+
+  client.onText(/\/turnon/, msg => {
+    if (msg.from && msg.from.username === 'jaloviina') {
+      turnOnLights()      
+    }
+  })
+
+  client.onText(/\/turnoff/, msg => {
+    if (msg.from && msg.from.username === 'jaloviina') {
+      turnOffLights()
+    }
+  })
+
+  ws.on('message', data => {
+    if (data === process.env.MERG_BT_UUID) {
+      turnOnLights()
+      setTimeout(() => turnOffLights, 60000)
     }
   })
 
