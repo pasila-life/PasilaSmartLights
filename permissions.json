@@ -1,0 +1,12 @@
+[
+  {
+    "deviceInstanceId": 65537,
+    "nick": "room2",
+    "permissions": ["jaloviina"]
+  },
+  {
+    "deviceInstanceId": 65538,
+    "nick": "kitchen",
+    "permissions": ["jaloviina", "Vihaton"]
+  }
+]

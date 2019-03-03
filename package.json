@@ -6,13 +6,11 @@
   "main": "pathToMain",
   "dependencies": {
     "@types/node-telegram-bot-api": "~0.30.3",
-    "@types/ws": "^6.0.1",
     "dotenv": "^6.2.0",
     "node-telegram-bot-api": "~0.30.0",
     "node-tradfri-client": "~1.5.0",
     "ts-node": "^7.0.1",
-    "typescript": "^3.2.2",
-    "ws": "^6.1.2"
+    "typescript": "^3.2.2"
   },
   "scripts": {
     "start": "tsc && node ./build/app.js"
