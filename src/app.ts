@@ -2,7 +2,7 @@ require('dotenv').config()
 import {TradfriClient, Accessory, AccessoryTypes, discoverGateway} from "node-tradfri-client";
 import {writeFileSync, readFileSync, existsSync} from 'fs'
 import TelegramBotClient from 'node-telegram-bot-api'
-import permissions from '../permissions.json'
+import permissions from './permissions.json'
 
 async function app() {
   const devices = new Map<number, Accessory>()
